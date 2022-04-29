@@ -14,7 +14,7 @@ all_data <- read.csv("data/all_data_raw.csv") %>%
     filter(behaviour %in% c("transport", "tandem_run", "reverse_tandem_run")) %>% # Removes trial starts and discoveries
     filter(successful != "failed") %>% # Removes failed TRs and RTRs 
     filter(!(focal %in% c("new_worker", "", "w__", "unkown_ID"))) %>% # Removes new workers and unknown workers
-    filter(!(partner %in% c("", "new_worker", "unpaintedqueen", "male"))) %>% # Removes new workers and unknown workers
+    filter(!(partner %in% c("", "new_worker", "unpaintedqueen", "male", "newworker", "?yb"))) %>% # Removes new workers and unknown workers
     filter(!(origin == "dark" & destination == "dim")) %>%  # Removes indirect interactions
     filter(!(origin == "dim" & destination == "dark")) %>% # Removes indirect interactions
     filter(!(origin == "dim" & destination == "dim")) %>% # Removes indirect interactions
@@ -210,10 +210,126 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_53[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+############### NO-CHOICE COLONIES ##############
+###############    Colony 60    ##############
+c60 <- all_data %>% 
+  filter(Colony == "n.amb60")
 
+c60_list <- split(c60, c60$Trial) # Creates a list for the three trials
 
+nodes <- read.csv("data/node_lists.csv") %>% 
+  filter(colony == 60) %>% 
+  select(ID)
 
+igraphs_60 <- lapply(c60_list, func_igraph) 
+igraphs_60 <- lapply(igraphs_60, func_plot_igraph) # Creates igraphs for all three trials
 
+# Trial #1
+id <- tkplot(igraphs_60[[1]])
+coords_60 <- tk_coords(id) # Saves coordinates of trial #1
+tk_set_coords(id, coords_60) # Set stored coordinates to trial #1
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_60[[1]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #2 
+id <- tkplot(igraphs_60[[2]])
+
+tk_set_coords(id, coords_60) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_60[[2]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #3 
+id <- tkplot(igraphs_60[[3]])
+
+tk_set_coords(id, coords_60) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_60[[3]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+###############    Colony 59    ##############
+c59 <- all_data %>% 
+  filter(Colony == "n.amb59")
+
+c59_list <- split(c59, c59$Trial) # Creates a list for the three trials
+
+nodes <- read.csv("data/node_lists.csv") %>% 
+  filter(colony == 59) %>% 
+  select(ID)
+
+igraphs_59 <- lapply(c59_list, func_igraph) 
+igraphs_59 <- lapply(igraphs_59, func_plot_igraph) # Creates igraphs for all three trials
+
+# Trial #1
+id <- tkplot(igraphs_59[[1]])
+coords_59 <- tk_coords(id) # Saves coordinates of trial #1
+tk_set_coords(id, coords_59) # Set stored coordinates to trial #1
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_59[[1]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #2 
+id <- tkplot(igraphs_59[[2]])
+
+tk_set_coords(id, coords_59) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_59[[2]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #3 
+id <- tkplot(igraphs_59[[3]])
+
+tk_set_coords(id, coords_59) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_59[[3]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+###############    Colony 47    ##############
+c47 <- all_data %>% 
+  filter(Colony == "n.amb47")
+
+c47_list <- split(c47, c47$Trial) # Creates a list for the three trials
+
+nodes <- read.csv("data/node_lists.csv") %>% 
+  filter(colony == 47) %>% 
+  select(ID)
+
+igraphs_47 <- lapply(c47_list, func_igraph) 
+igraphs_47 <- lapply(igraphs_47, func_plot_igraph) # Creates igraphs for all three trials
+
+# Trial #1
+id <- tkplot(igraphs_47[[1]])
+coords_47 <- tk_coords(id) # Saves coordinates of trial #1
+tk_set_coords(id, coords_47) # Set stored coordinates to trial #1
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_47[[1]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #2 
+id <- tkplot(igraphs_47[[2]])
+
+tk_set_coords(id, coords_47) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_47[[2]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+# Trial #3 
+id <- tkplot(igraphs_47[[3]])
+
+tk_set_coords(id, coords_47) # Set stored coordinates to trial #2
+tkplot.fit.to.screen(id)
+
+hist(V(igraphs_47[[3]])$strength, col = "lightsteelblue1", 
+     breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
 
 
