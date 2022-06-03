@@ -56,6 +56,10 @@ c42 <- all_data %>%
 
 c42_list <- split(c42, c42$Trial) # Creates a list for the three trials
 
+nodes <- read.csv("data/node_lists.csv") %>% 
+         filter(colony == 42) %>% 
+         select(ID)
+
 igraphs_42 <- lapply(c42_list, func_igraph) 
 igraphs_42 <- lapply(igraphs_42, func_plot_igraph) # Creates igraphs for all three trials
 
@@ -87,7 +91,6 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_42[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
-
 ###############    Colony 55    ##############
 c55 <- all_data %>% 
        filter(Colony == "n.amb55")
@@ -100,6 +103,9 @@ nodes <- read.csv("data/node_lists.csv") %>%
 
 igraphs_55 <- lapply(c55_list, func_igraph) 
 igraphs_55 <- lapply(igraphs_55, func_plot_igraph) # Creates igraphs for all three trials
+
+# Remove dead ants
+igraphs_55[[3]] <- delete_vertices(igraphs_55[[3]], "w")
 
 # Trial #1
 id <- tkplot(igraphs_55[[1]])
@@ -143,6 +149,10 @@ nodes <- read.csv("data/node_lists.csv") %>%
 igraphs_41 <- lapply(c41_list, func_igraph) 
 igraphs_41 <- lapply(igraphs_41, func_plot_igraph) # Creates igraphs for all three trials
 
+# Remove dead ants
+igraphs_41[[2]] <- delete_vertices(igraphs_41[[2]], c("bgy", "bgo"))
+igraphs_41[[3]] <- delete_vertices(igraphs_41[[3]], c("bgy", "bgo"))
+
 # Trial #1
 id <- tkplot(igraphs_41[[1]])
 coords_41 <- tk_coords(id) # Saves coordinates of trial #1
@@ -182,6 +192,10 @@ nodes <- read.csv("data/node_lists.csv") %>%
 
 igraphs_53 <- lapply(c53_list, func_igraph) 
 igraphs_53 <- lapply(igraphs_53, func_plot_igraph) # Creates igraphs for all three trials
+
+# Remove dead ants
+igraphs_53[[2]] <- delete_vertices(igraphs_53[[2]], "bgw")
+igraphs_53[[3]] <- delete_vertices(igraphs_53[[3]], "bgw")
 
 # Trial #1
 id <- tkplot(igraphs_53[[1]])
@@ -264,6 +278,10 @@ nodes <- read.csv("data/node_lists.csv") %>%
 igraphs_59 <- lapply(c59_list, func_igraph) 
 igraphs_59 <- lapply(igraphs_59, func_plot_igraph) # Creates igraphs for all three trials
 
+# Remove dead ants
+igraphs_59[[2]] <- delete_vertices(igraphs_59[[2]], c("gow", "gwg"))
+igraphs_59[[3]] <- delete_vertices(igraphs_59[[3]], c("gow", "gwg"))
+
 # Trial #1
 id <- tkplot(igraphs_59[[1]])
 coords_59 <- tk_coords(id) # Saves coordinates of trial #1
@@ -304,6 +322,11 @@ nodes <- read.csv("data/node_lists.csv") %>%
 igraphs_45 <- lapply(c45_list, func_igraph) 
 igraphs_45 <- lapply(igraphs_45, func_plot_igraph) # Creates igraphs for all three trials
 
+# Remove dead ants
+igraphs_45[[1]] <- delete_vertices(igraphs_45[[1]], "wbw")
+igraphs_45[[2]] <- delete_vertices(igraphs_45[[2]], c("bgo", "wbw", "wwy"))
+igraphs_45[[3]] <- delete_vertices(igraphs_45[[3]], c("bgo", "wbw", "wwy"))
+
 # Trial #1
 id <- tkplot(igraphs_45[[1]])
 coords_45 <- tk_coords(id) # Saves coordinates of trial #1
@@ -343,6 +366,9 @@ nodes <- read.csv("data/node_lists.csv") %>%
 
 igraphs_47 <- lapply(c47_list, func_igraph) 
 igraphs_47 <- lapply(igraphs_47, func_plot_igraph) # Creates igraphs for all three trials
+
+igraphs_47[[1]] <- delete_vertices(igraphs_47[[1]], "wgo")
+igraphs_47[[2]] <- delete_vertices(igraphs_47[[2]], "wgo")
 
 # Data from trial 1 is missing
 # Trial #2
