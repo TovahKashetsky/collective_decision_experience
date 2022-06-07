@@ -27,9 +27,20 @@ plot(simulateResiduals(density_model)) # Diagnostic plots
 summary(density_model)
 Anova(density_model)
 
+# Plot change in coef of variation over successive emigrations
+ggplot(data = sna_metrics, aes(y = coefficient_of_variation, x = emigration, color = colony)) + 
+       geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE) +
+       scale_x_continuous(name = "Emigration", breaks = c(1, 3, 5)) + 
+       ylim(1, 3) + ylab("Outstrength coefficient of variation") + 
+       facet_grid(~treatment) + scale_color_nejm()
 
+# CoV model
+cov_model <- lmer(data = sna_metrics, coefficient_of_variation ~ emigration*treatment + 
+                        (1|colony))
 
-
+plot(simulateResiduals(cov_model)) # Diagnostic plots
+summary(cov_model)
+Anova(cov_model)
 
 
 
