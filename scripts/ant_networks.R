@@ -72,6 +72,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_42[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_42_1 <- (sd(V(igraphs_42[[1]])$strength))/(mean(V(igraphs_42[[1]])$strength))) # Coefficient of variation
+
 # Trial #2 
 id <- tkplot(igraphs_42[[2]])
 tkplot(igraphs_42[[2]])
@@ -82,6 +84,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_42[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_42_2 <- (sd(V(igraphs_42[[2]])$strength))/(mean(V(igraphs_42[[2]])$strength))) # Coefficient of variation
+
 # Trial #3
 id <- tkplot(igraphs_42[[3]])
 
@@ -90,6 +94,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_42[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_42_3 <- (sd(V(igraphs_42[[3]])$strength))/(mean(V(igraphs_42[[3]])$strength))) # Coefficient of variation
 
 ###############    Colony 55    ##############
 c55 <- all_data %>% 
@@ -116,6 +122,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_55[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_55_1 <- (sd(V(igraphs_55[[1]])$strength))/(mean(V(igraphs_55[[1]])$strength))) # Coefficient of variation
+
 # Trial #2 
 id <- tkplot(igraphs_55[[2]])
 tkplot(igraphs_55[[2]])
@@ -126,6 +134,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_55[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_55_2 <- (sd(V(igraphs_55[[2]])$strength))/(mean(V(igraphs_55[[2]])$strength))) # Coefficient of variation
+
 # Trial #3
 id <- tkplot(igraphs_55[[3]])
 
@@ -135,6 +145,7 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_55[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_55_3 <- (sd(V(igraphs_55[[3]])$strength))/(mean(V(igraphs_55[[3]])$strength))) # Coefficient of variation
 
 ###############    Colony 41    ##############
 c41 <- all_data %>% 
@@ -162,6 +173,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_41[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_41_1 <- (sd(V(igraphs_41[[1]])$strength))/(mean(V(igraphs_41[[1]])$strength))) # Coefficient of variation
+
 # Trial #2 
 id <- tkplot(igraphs_41[[2]])
 
@@ -171,6 +184,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_41[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_41_2 <- (sd(V(igraphs_41[[2]])$strength))/(mean(V(igraphs_41[[2]])$strength))) # Coefficient of variation
+
 # Trial #3 
 id <- tkplot(igraphs_41[[3]])
 
@@ -179,6 +194,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_41[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_41_3 <- (sd(V(igraphs_41[[3]])$strength))/(mean(V(igraphs_41[[3]])$strength))) # Coefficient of variation
 
 ###############    Colony 53    ##############
 c53 <- all_data %>% 
@@ -206,6 +223,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_53[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_53_1 <- (sd(V(igraphs_53[[1]])$strength))/(mean(V(igraphs_53[[1]])$strength))) # Coefficient of variation
+
 # Trial #2 
 id <- tkplot(igraphs_53[[2]])
 
@@ -215,6 +234,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_53[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_53_2 <- (sd(V(igraphs_53[[2]])$strength))/(mean(V(igraphs_53[[2]])$strength))) # Coefficient of variation
+
 # Trial #3 
 id <- tkplot(igraphs_53[[3]])
 
@@ -223,6 +244,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_53[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_53_3 <- (sd(V(igraphs_53[[3]])$strength))/(mean(V(igraphs_53[[3]])$strength))) # Coefficient of variation
 
 ############### NO-CHOICE COLONIES ##############
 ###############    Colony 60    ##############
@@ -247,6 +270,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_60[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_60_1 <- (sd(V(igraphs_60[[1]])$strength))/(mean(V(igraphs_60[[1]])$strength))) # Coefficient of variation
+
 # Trial #2 
 id <- tkplot(igraphs_60[[2]])
 
@@ -256,6 +281,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_60[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_60_2 <- (sd(V(igraphs_60[[2]])$strength))/(mean(V(igraphs_60[[2]])$strength))) # Coefficient of variation
+
 # Trial #3 
 id <- tkplot(igraphs_60[[3]])
 
@@ -264,6 +291,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_60[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_60_3 <- (sd(V(igraphs_60[[3]])$strength))/(mean(V(igraphs_60[[3]])$strength))) # Coefficient of variation
 
 ###############    Colony 59    ##############
 c59 <- all_data %>% 
@@ -291,6 +320,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_59[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_59_1 <- (sd(V(igraphs_59[[1]])$strength))/(mean(V(igraphs_59[[1]])$strength)))
+
 # Trial #2 
 id <- tkplot(igraphs_59[[2]])
 
@@ -300,6 +331,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_59[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_59_2 <- (sd(V(igraphs_59[[2]])$strength))/(mean(V(igraphs_59[[2]])$strength)))
+
 # Trial #3 
 id <- tkplot(igraphs_59[[3]])
 
@@ -308,6 +341,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_59[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_59_3 <- (sd(V(igraphs_59[[3]])$strength))/(mean(V(igraphs_59[[3]])$strength)))
 
 ###############    Colony 45    ##############
 c45 <- all_data %>% 
@@ -336,6 +371,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_45[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_45_1 <- (sd(V(igraphs_45[[1]])$strength))/(mean(V(igraphs_45[[1]])$strength)))
+
 # Trial #2 
 id <- tkplot(igraphs_45[[2]])
 
@@ -345,6 +382,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_45[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_45_2 <- (sd(V(igraphs_45[[2]])$strength))/(mean(V(igraphs_45[[2]])$strength)))
+
 # Trial #3 
 id <- tkplot(igraphs_45[[3]])
 
@@ -353,6 +392,8 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_45[[3]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_45_3 <- (sd(V(igraphs_45[[3]])$strength))/(mean(V(igraphs_45[[3]])$strength)))
 
 ###############    Colony 47    ##############
 c47 <- all_data %>% 
@@ -380,6 +421,8 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_47[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
+(cv_45_2 <- (sd(V(igraphs_47[[1]])$strength))/(mean(V(igraphs_47[[1]])$strength)))
+
 # Trial #3
 id <- tkplot(igraphs_47[[2]])
 
@@ -388,4 +431,6 @@ tkplot.fit.to.screen(id)
 
 hist(V(igraphs_47[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
+
+(cv_45_3 <- (sd(V(igraphs_47[[2]])$strength))/(mean(V(igraphs_47[[2]])$strength)))
 
