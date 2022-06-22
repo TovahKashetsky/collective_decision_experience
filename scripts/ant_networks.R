@@ -19,23 +19,31 @@ all_data <- read.csv("data/all_data_raw.csv") %>%
     filter(!(origin == "dim" & destination == "dark")) %>% # Removes indirect interactions
     filter(!(origin == "dim" & destination == "dim")) %>% # Removes indirect interactions
     filter(!(origin == "dark" & destination == "dark")) %>% # Removes indirect interactions
-    select(Group, Colony, Trial, behaviour, focal, partner)
+    select(Group, Colony, Trial, behaviour, focal, partner, destination)
+
+names(all_data)[names(all_data) == "focal"] <- "FROM" # Rename for edgelists (probs unnecessary but whatever)
+names(all_data)[names(all_data) == "partner"] <- "TO"
+names(all_data)[names(all_data) == "behaviour"] <- "TYPE"
+
+all_data$TYPE[all_data$TYPE == "reverse_tandem_run"] <- "tandem_run" # Convert RTRs to TRs
             
 ################# NETWORKS CREATION FUNCTIONS######################
 # Function that creates igraph objects
 func_igraph <- function(trial_list){
   
     edge_list <- trial_list %>% 
-    select(focal, partner) %>% 
+    select(FROM, TO, TYPE) %>% 
     mutate(weight = 1) # turns dataframes for each rep into edgelists
   
+    edge_list <- aggregate(data = edge_list, weight ~ FROM + TO + TYPE, FUN = sum)
+    
     igraph <- graph_from_data_frame(d = edge_list, vertices = nodes) # creates igraph objects
   
     strength <- strength(igraph, mode = "out") # calculate strength
     igraph <- set_vertex_attr(igraph, "strength", value = strength) # assign strength as vertex attributes
-  
-    igraph <- simplify(igraph, remove.multiple = TRUE, edge.attr.comb = sum) # remove double edges
-  
+
+    #igraph <- simplify(igraph, remove.multiple = TRUE) # remove double edges
+
   return(igraph)
 }
 
@@ -46,6 +54,8 @@ func_plot_igraph <- function(igraph){
     V(igraph)$color <- "white"
     E(igraph)$color <- "black"
     E(igraph)$width <- E(igraph)$weight*3
+    E(igraph)$lty <- ifelse(E(igraph)$TYPE == "tandem_run", 2, 1)
+    
   return(igraph)
 }
 
