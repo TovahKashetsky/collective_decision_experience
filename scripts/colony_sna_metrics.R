@@ -31,7 +31,7 @@ Anova(density_model)
 ggplot(data = sna_metrics, aes(y = coefficient_of_variation, x = emigration, color = colony)) + 
        geom_point(size = 2) + geom_smooth(method = "lm", se = FALSE) +
        scale_x_continuous(name = "Emigration", breaks = c(1, 3, 5)) + 
-       ylim(1, 3) + ylab("Outstrength coefficient of variation") + 
+       ylim(1, 3.5) + ylab("Outstrength coefficient of variation") + 
        facet_grid(~treatment) + scale_color_nejm()
 
 # CoV model
