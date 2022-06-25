@@ -19,7 +19,7 @@ all_data <- read.csv("data/all_data_raw.csv") %>%
     filter(!(origin == "dim" & destination == "dark")) %>% # Removes indirect interactions
     filter(!(origin == "dim" & destination == "dim")) %>% # Removes indirect interactions
     filter(!(origin == "dark" & destination == "dark")) %>% # Removes indirect interactions
-    select(Group, Colony, Trial, behaviour, focal, partner, destination)
+    select(Group, Colony, Trial, behaviour, focal, partner, nest)
 
 names(all_data)[names(all_data) == "focal"] <- "FROM" # Rename for edgelists (probs unnecessary but whatever)
 names(all_data)[names(all_data) == "partner"] <- "TO"
@@ -32,15 +32,24 @@ all_data$TYPE[all_data$TYPE == "reverse_tandem_run"] <- "tandem_run" # Convert R
 func_igraph <- function(trial_list){
   
     edge_list <- trial_list %>% 
-    select(FROM, TO, TYPE) %>% 
+    select(FROM, TO, TYPE, nest) %>% 
     mutate(weight = 1) # turns dataframes for each rep into edgelists
   
-    edge_list <- aggregate(data = edge_list, weight ~ FROM + TO + TYPE, FUN = sum)
+    edge_list <- aggregate(data = edge_list, weight ~ FROM + TO + TYPE + nest, FUN = sum)
     
-    igraph <- graph_from_data_frame(d = edge_list, vertices = nodes) # creates igraph objects
+    node_names <- nodes %>% 
+                  filter(emigration == 2) %>% 
+                  select(ID) 
+    
+    node_colours <- nodes %>% 
+                    filter(emigration == 2) %>% 
+                    select(colour)
+    
+    igraph <- graph_from_data_frame(d = edge_list, vertices = node_names) # creates igraph objects
   
     strength <- strength(igraph, mode = "out") # calculate strength
     igraph <- set_vertex_attr(igraph, "strength", value = strength) # assign strength as vertex attributes
+    igraph <- set_vertex_attr(igraph, "colour", value = node_colours$colour) # sets node colours
 
     #igraph <- simplify(igraph, remove.multiple = TRUE) # remove double edges
 
@@ -49,12 +58,15 @@ func_igraph <- function(trial_list){
 
 # Function that assigns igraph attributes
 func_plot_igraph <- function(igraph){
-    V(igraph)$size <- (V(igraph)$strength+2)*4
-    V(igraph)$label.color <- "black"
-    V(igraph)$color <- "white"
+    V(igraph)$size <- (V(igraph)$strength+2)*5
+    V(igraph)$label.color <- ifelse(V(igraph)$colour == "blue", "white", "black")
+    V(igraph)$label.cex <- 0.6
+    V(igraph)$color <- ifelse(V(igraph)$colour == "blue", "#118ab2", ifelse(V(igraph)$colour == "yellow", "#edae49",
+                                                                     ifelse(V(igraph)$colour == "green", "#8eb897", "#d9dcd6")))
     E(igraph)$color <- "black"
     E(igraph)$width <- E(igraph)$weight*3
     E(igraph)$lty <- ifelse(E(igraph)$TYPE == "tandem_run", 2, 1)
+    E(igraph)$color <- ifelse(E(igraph)$nest == "dark", "#118ab2", "#edae49")
     
   return(igraph)
 }
@@ -67,14 +79,13 @@ c42 <- all_data %>%
 c42_list <- split(c42, c42$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-         filter(colony == 42) %>% 
-         select(ID)
+         filter(colony == 42)
 
 igraphs_42 <- lapply(c42_list, func_igraph) 
 igraphs_42 <- lapply(igraphs_42, func_plot_igraph) # Creates igraphs for all three trials
 
 # Trial #1
-id <- tkplot(igraphs_42[[1]])
+id <- tkplot(igraphs_42[[1]], vertex.label.family = "Helvetica")
 # coords_42 <- tk_coords(id) # Saves coordinates of trial #1
 tk_set_coords(id, coords_42) # Set stored coordinates to trial #1
 tkplot.fit.to.screen(id)
