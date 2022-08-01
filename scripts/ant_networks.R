@@ -1,4 +1,4 @@
-## setwd("C:/Users/jy33/OneDrive/Desktop/R/ant_sna")
+setwd("C:/Users/jy33/OneDrive/Desktop/R/ant_sna")
 
 library(tidyverse)
 library(ggplot2); theme_set(theme_classic())
@@ -29,7 +29,7 @@ all_data$TYPE[all_data$TYPE == "reverse_tandem_run"] <- "tandem_run" # Convert R
             
 ################# NETWORKS CREATION FUNCTIONS######################
 # Function that creates igraph objects
-func_igraph <- function(trial_list){
+func_igraph <- function(trial_list, emi){
   
     edge_list <- trial_list %>% 
     select(FROM, TO, TYPE, nest) %>% 
@@ -38,11 +38,11 @@ func_igraph <- function(trial_list){
     edge_list <- aggregate(data = edge_list, weight ~ FROM + TO + TYPE + nest, FUN = sum)
     
     node_names <- nodes %>% 
-                  filter(emigration == 2) %>% 
+                  filter(emigration == emi) %>% 
                   select(ID) 
     
     node_colours <- nodes %>% 
-                    filter(emigration == 2) %>% 
+                    filter(emigration == emi) %>% 
                     select(colour)
     
     igraph <- graph_from_data_frame(d = edge_list, vertices = node_names) # creates igraph objects
@@ -51,7 +51,7 @@ func_igraph <- function(trial_list){
     igraph <- set_vertex_attr(igraph, "strength", value = strength) # assign strength as vertex attributes
     igraph <- set_vertex_attr(igraph, "colour", value = node_colours$colour) # sets node colours
 
-    #igraph <- simplify(igraph, remove.multiple = TRUE) # remove double edges
+    # igraph <- simplify(igraph, remove.multiple = TRUE) # remove double edges
 
   return(igraph)
 }
@@ -61,12 +61,12 @@ func_plot_igraph <- function(igraph){
     V(igraph)$size <- (V(igraph)$strength+2)*5
     V(igraph)$label.color <- ifelse(V(igraph)$colour == "blue", "white", "black")
     V(igraph)$label.cex <- 0.6
-    V(igraph)$color <- ifelse(V(igraph)$colour == "blue", "#118ab2", ifelse(V(igraph)$colour == "yellow", "#edae49",
-                                                                     ifelse(V(igraph)$colour == "green", "#8eb897", "#d9dcd6")))
-    E(igraph)$color <- "black"
+    V(igraph)$color <- "white"
+    V(igraph)$color <- ifelse(V(igraph)$colour == "blue", "#118ab2", ifelse(V(igraph)$colour == "yellow", "#e9c46a",
+                                                                     ifelse(V(igraph)$colour == "green", "#a6c48a", "#d9dcd6")))
     E(igraph)$width <- E(igraph)$weight*3
     E(igraph)$lty <- ifelse(E(igraph)$TYPE == "tandem_run", 2, 1)
-    E(igraph)$color <- ifelse(E(igraph)$nest == "dark", "#118ab2", "#edae49")
+    E(igraph)$color <- ifelse(E(igraph)$nest == "dark", "#118ab2", "#ffc300")
     
   return(igraph)
 }
@@ -81,12 +81,17 @@ c42_list <- split(c42, c42$Trial) # Creates a list for the three trials
 nodes <- read.csv("data/node_lists.csv") %>% 
          filter(colony == 42)
 
-igraphs_42 <- lapply(c42_list, func_igraph) 
+igraphs_42_1 <- func_igraph(c42_list[[1]], emi = 1)
+igraphs_42_2 <- func_igraph(c42_list[[2]], emi = 2)
+igraphs_42_3 <- func_igraph(c42_list[[3]], emi = 3)
+
+igraphs_42 <- list(igraphs_42_1, igraphs_42_2, igraphs_42_3)
+
 igraphs_42 <- lapply(igraphs_42, func_plot_igraph) # Creates igraphs for all three trials
 
 # Trial #1
 id <- tkplot(igraphs_42[[1]], vertex.label.family = "Helvetica")
-# coords_42 <- tk_coords(id) # Saves coordinates of trial #1
+coords_42 <- tk_coords(id) # Saves coordinates of trial #1
 tk_set_coords(id, coords_42) # Set stored coordinates to trial #1
 tkplot.fit.to.screen(id)
 
@@ -96,8 +101,8 @@ hist(V(igraphs_42[[1]])$strength, col = "lightsteelblue1",
 (cv_42_1 <- (sd(V(igraphs_42[[1]])$strength))/(mean(V(igraphs_42[[1]])$strength))) # Coefficient of variation
 
 # Trial #2 
-id <- tkplot(igraphs_42[[2]])
-tkplot(igraphs_42[[2]])
+id <- tkplot(igraphs_42[[2]], vertex.label.family = "Helvetica")
+#tkplot(igraphs_42[[2]])
 
 tk_set_coords(id, coords_42) # Set stored coordinates to trial #2
 tkplot.fit.to.screen(id)
@@ -108,7 +113,8 @@ hist(V(igraphs_42[[2]])$strength, col = "lightsteelblue1",
 (cv_42_2 <- (sd(V(igraphs_42[[2]])$strength))/(mean(V(igraphs_42[[2]])$strength))) # Coefficient of variation
 
 # Trial #3
-id <- tkplot(igraphs_42[[3]])
+id <- tkplot(igraphs_42[[3]], vertex.label.family = "Helvetica")
+tkplot(igraphs_42[[3]])
 
 tk_set_coords(id, coords_42) # Set stored coordinates to trial #2
 tkplot.fit.to.screen(id)
@@ -125,8 +131,7 @@ c55 <- all_data %>%
 c55_list <- split(c55, c55$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-         filter(colony == 55) %>% 
-         select(ID)
+         filter(colony == 55) 
 
 igraphs_55 <- lapply(c55_list, func_igraph) 
 igraphs_55 <- lapply(igraphs_55, func_plot_igraph) # Creates igraphs for all three trials
@@ -175,8 +180,7 @@ c41 <- all_data %>%
 c41_list <- split(c41, c41$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 41) %>% 
-  select(ID)
+  filter(colony == 41)
 
 igraphs_41 <- lapply(c41_list, func_igraph) 
 igraphs_41 <- lapply(igraphs_41, func_plot_igraph) # Creates igraphs for all three trials
@@ -220,13 +224,12 @@ hist(V(igraphs_41[[3]])$strength, col = "lightsteelblue1",
 
 ###############    Colony 53    ##############
 c53 <- all_data %>% 
-  filter(Colony == "n.amb53")
+       filter(Colony == "n.amb53")
 
 c53_list <- split(c53, c53$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 53) %>% 
-  select(ID)
+         filter(colony == 53)
 
 igraphs_53 <- lapply(c53_list, func_igraph) 
 igraphs_53 <- lapply(igraphs_53, func_plot_igraph) # Creates igraphs for all three trials
@@ -276,8 +279,7 @@ c60 <- all_data %>%
 c60_list <- split(c60, c60$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 60) %>% 
-  select(ID)
+  filter(colony == 60)
 
 igraphs_60 <- lapply(c60_list, func_igraph) 
 igraphs_60 <- lapply(igraphs_60, func_plot_igraph) # Creates igraphs for all three trials
@@ -322,8 +324,7 @@ c59 <- all_data %>%
 c59_list <- split(c59, c59$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 59) %>% 
-  select(ID)
+  filter(colony == 59)
 
 igraphs_59 <- lapply(c59_list, func_igraph) 
 igraphs_59 <- lapply(igraphs_59, func_plot_igraph) # Creates igraphs for all three trials
@@ -372,8 +373,7 @@ c45 <- all_data %>%
 c45_list <- split(c45, c45$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 45) %>% 
-  select(ID)
+  filter(colony == 45)
 
 igraphs_45 <- lapply(c45_list, func_igraph) 
 igraphs_45 <- lapply(igraphs_45, func_plot_igraph) # Creates igraphs for all three trials
@@ -423,8 +423,7 @@ c47 <- all_data %>%
 c47_list <- split(c47, c47$Trial) # Creates a list for the three trials
 
 nodes <- read.csv("data/node_lists.csv") %>% 
-  filter(colony == 47) %>% 
-  select(ID)
+  filter(colony == 47)
 
 igraphs_47 <- lapply(c47_list, func_igraph) 
 igraphs_47 <- lapply(igraphs_47, func_plot_igraph) # Creates igraphs for all three trials
