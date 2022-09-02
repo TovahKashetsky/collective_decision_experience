@@ -447,7 +447,7 @@ colony,treatment,emigration,ID,age,colour
 53,choice,1,oob,new,none
 53,choice,1,pwp,new,none
 53,choice,1,ypp,new,none
-53,choice,2,bgw,dead,blue
+53,choice,2,bgw,dead,none
 53,choice,2,gbo,old,blue
 53,choice,2,ggb,old,blue
 53,choice,2,gow,old,none
