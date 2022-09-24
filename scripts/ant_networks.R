@@ -454,10 +454,10 @@ c47_list <- split(c47, c47$Trial) # Creates a list for the three trials
 nodes <- read.csv("data/node_lists.csv") %>% 
   filter(colony == 47)
 
-igraphs_47_1 <- func_igraph(c47_list[[1]], emi = 1)
-igraphs_47_2 <- func_igraph(c47_list[[2]], emi = 2)
+igraphs_47_2 <- func_igraph(c47_list[[1]], emi = 2)
+igraphs_47_3 <- func_igraph(c47_list[[2]], emi = 3)
 
-igraphs_47 <- list(igraphs_47_1, igraphs_47_2)
+igraphs_47 <- list(igraphs_47_2, igraphs_47_3)
 igraphs_47 <- lapply(igraphs_47, func_plot_igraph) # Creates igraphs for all three trials
 
 # Delete dead ants
@@ -474,7 +474,7 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_47[[1]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
-(cv_45_2 <- (sd(V(igraphs_47[[1]])$strength))/(mean(V(igraphs_47[[1]])$strength)))
+(cv_47_2 <- (sd(V(igraphs_47[[1]])$strength))/(mean(V(igraphs_47[[1]])$strength)))
 
 # Trial #3
 id <- tkplot(igraphs_47[[2]], vertex.label.family = "Helvetica")
@@ -485,5 +485,5 @@ tkplot.fit.to.screen(id)
 hist(V(igraphs_47[[2]])$strength, col = "lightsteelblue1", 
      breaks = c(0:12), xlab = "Out-strength") # Strength distribution
 
-(cv_45_3 <- (sd(V(igraphs_47[[2]])$strength))/(mean(V(igraphs_47[[2]])$strength)))
+(cv_47_3 <- (sd(V(igraphs_47[[2]])$strength))/(mean(V(igraphs_47[[2]])$strength)))
 
