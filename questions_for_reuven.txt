@@ -1,1 +1,0 @@
-1. Do we include failed TRs and RTRs as interactions?
